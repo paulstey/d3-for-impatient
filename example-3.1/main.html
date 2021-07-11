@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="d3.js"></script>
+  <script>
+    function makeKeys() {
+      let ds1 = [["Mary", 1], ["Jane", 4], ["Anne", 2]]
+      let ds2 = [["Anne", 5], ["Jane", 3]]
+
+      let scX = d3.scaleLinear()
+                  .domain([0, 6])
+                  .range([50, 300])
+      
+      let scY = d3.scaleLinear() 
+                  .domain([0, 3])
+                  .range([50, 150])
+
+      let j = -1
+      let k = -1
+
+      let svg = d3.select("#key")
+
+      svg.selectAll("text")
+         .data(ds1)
+         .enter()
+         .append("text")
+         .attr("x", 20)
+         .attr("y", d => scY(++j))
+         .text(d => d[0])
+      
+      svg.selectAll("circle")
+         .data(ds1)
+         .enter()
+         .append("circle")
+         .attr("r", 5)
+         .attr("fill", "purple")
+         .attr("cx", d => scX(d[1]))
+         .attr("cy", d => scY(++k) - 5)
+      
+      svg.on("click", function() {
+        let cs = svg.selectAll("circle")
+                    .data(ds2, d => d[0])
+        cs.transition()
+          .duration(500)
+          .attr("cx", d => scX(d[1]))
+
+        cs.exit() 
+          .attr("fill", "blue")
+      })
+    }
+  </script>
+</head>
+
+<body onload="makeKeys()" />
+  <svg id="key" width="400" height="200" 
+    style="background: rgb(238, 237, 237);"></svg>
+</html>
