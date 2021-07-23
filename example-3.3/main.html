@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="d3.js"></script>
+  <script>
+    function makeSort() {
+      let dat = ["Jane", "Anne", "Mary"];
+      let ul = d3.select("#sort");
+
+      ul.selectAll("li")
+        .data(dat)
+        .enter()
+        .append("li")
+        .text(d => d);
+
+      let once;
+
+      // Insert elements on mouse enter
+      ul.on("mouseenter", () => {
+        if (once) {
+          return;
+        }
+        once = 1;
+        ul.insert("li", ":nth-child(2)")
+          .datum("Lucy")
+          .text("Lucy");
+
+        ul.insert("li", ":first-child")
+          .datum("Lisa")
+          .text("Lisa");
+      });
+      
+      // Sort on click
+      ul.on("click", () => {
+        ul.selectAll("li")
+          .sort( (a, b) => (a < b ? 1 : b < a ? -1 : 0))
+      });
+    }
+  </script>
+</head>
+
+<body onload="makeSort()" >
+  <ul id="sort"></ul>
+</body>
+</html>
