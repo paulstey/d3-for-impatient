@@ -5,10 +5,11 @@
   <script src="d3.js"></script>
   <script>
     function coordsPixels(selector) {
-      var txt = d3.select(selector).append("text");
-      var svg = d3.select(selector).attr("cursor", "crosshair")
+      let txt = d3.select(selector).append("text");
+      
+      let svg = d3.select(selector).attr("cursor", "crosshair")
                   .on("mousemove", (event) => {
-                    var pt = d3.pointer(event); 
+                    let pt = d3.pointer(event); 
                     txt.attr("x", 18 + pt[0])
                        .attr("y", 6  + pt[1])
                        .text("" + pt[0] + ", " + pt[1]);
